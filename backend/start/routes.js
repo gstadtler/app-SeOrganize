@@ -16,6 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+Route.post('/cadastrar', 'UserController.cadastrar');
+Route.post('/autenticar', 'UserController.autenticar');
+
+Route.get('/app', 'AppController.index').middleware(["auth"]);
+
+Route.group(() => {
+  Route.resource("clientes", "ClienteController").apiOnly();
+}).middleware("auth");
